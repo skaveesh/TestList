@@ -36,10 +36,28 @@ public class MyCustomeAdapter extends RecyclerView.Adapter<MyCustomeAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.textview.setText(data.get(position).title);
         holder.imageview.setImageResource(data.get(position).imageId);
         holder.descplyr.setText(data.get(position).desc);
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "title : " + data.get(position).title, Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, "description : " + data.get(position).desc, Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
     }
 
     @Override
