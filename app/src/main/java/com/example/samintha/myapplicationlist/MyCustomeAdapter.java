@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by samintha on 1/20/2017.
+ * Created by Samintha on 1/20/2017.
  */
 
 public class MyCustomeAdapter extends RecyclerView.Adapter<MyCustomeAdapter.MyViewHolder> {

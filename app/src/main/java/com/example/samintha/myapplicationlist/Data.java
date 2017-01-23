@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Data {
+    
     public static ArrayList<Information>getData(){
         ArrayList<Information> data = new ArrayList<>();
 
