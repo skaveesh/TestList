@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView,recyclerView2;
-    MyCustomeAdapter adapter,adapter2;
+    RecyclerView recyclerView;
+    static RecyclerView recyclerView2;
+    MyCustomeAdapter adapter;
+    static MyCustomeAdapter2 adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
+
         recyclerView2 = (RecyclerView) findViewById(R.id.recycleView2);
-        adapter2 = new MyCustomeAdapter(this, Data.getData());
+        adapter2 = new MyCustomeAdapter2(this, Data2.getData());
         recyclerView2.setAdapter(adapter2);
-        recyclerView2.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView2.setLayoutManager(new GridLayoutManager(this,1));
     }
 }

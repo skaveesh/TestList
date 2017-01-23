@@ -1,5 +1,8 @@
 package com.example.samintha.myapplicationlist;
 
+/**
+ * Created by samintha on 1/23/2017.
+ */
 
 import android.content.Context;
 import android.os.Parcelable;
@@ -13,42 +16,54 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * Created by Samintha on 1/20/2017.
- */
-
-public class MyCustomeAdapter extends RecyclerView.Adapter<MyCustomeAdapter.MyViewHolder> {
-
+public class MyCustomeAdapter2 extends RecyclerView.Adapter<MyCustomeAdapter2.MyViewHolder>{
     Context context;
-    ArrayList<Information> data;
+    ArrayList<Information2> data;
     LayoutInflater inflater;
 
-    public MyCustomeAdapter(Context context, ArrayList<Information> data) {
+    public MyCustomeAdapter2(Context context, ArrayList<Information2> data) {
         this.context = context;
         this.data = data;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = inflater.inflate(R.layout.list_item_row,parent,false);
-        MyViewHolder holder = new MyViewHolder(view);
+    public MyCustomeAdapter2.MyViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        View view = inflater.inflate(R.layout.list_item_row2,parent,false);
+        MyCustomeAdapter2.MyViewHolder holder = new MyCustomeAdapter2.MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyCustomeAdapter2.MyViewHolder holder, final int position) {
         holder.textview.setText(data.get(position).title);
-        holder.imageview.setImageResource(data.get(position).imageId);
         holder.descplyr.setText(data.get(position).desc);
-
+        holder.quantity.setText(data.get(position).quant);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "title : " + data.get(position).title, Toast.LENGTH_LONG).show();
+                Data2.removeOneByOne(position);
 
-                Data2.setData(data.get(position).title,data.get(position).desc);
+                // Save state (This is to stay on the same scroll position)
+                Parcelable recyclerViewState;
+                recyclerViewState = MainActivity.recyclerView2.getLayoutManager().onSaveInstanceState();
+
+                //notify data changes
+                MainActivity.adapter2 = new MyCustomeAdapter2(context, Data2.getData());
+                MainActivity.adapter2.notifyItemChanged(0,getItemCount());
+                MainActivity.recyclerView2.setAdapter(MainActivity.adapter2);
+
+                // Resore state (This is to stay on the same scroll position)
+                MainActivity.recyclerView2.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                Data2.removeWholeItem(position);
 
                 // Save state (This is to stay on the same scroll position)
                 Parcelable recyclerViewState;
@@ -61,14 +76,6 @@ public class MyCustomeAdapter extends RecyclerView.Adapter<MyCustomeAdapter.MyVi
 
                 // Resore state (This is to stay on the same scroll position)
                 MainActivity.recyclerView2.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-            }
-        });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(context, "description : " + data.get(position).desc, Toast.LENGTH_LONG).show();
                 return true;
             }
         });
@@ -83,14 +90,13 @@ public class MyCustomeAdapter extends RecyclerView.Adapter<MyCustomeAdapter.MyVi
 
         TextView textview;
         TextView descplyr;
-        ImageView imageview;
-
+        TextView quantity;
         public MyViewHolder(View itemView) {
             super(itemView);
 
             descplyr = (TextView)itemView.findViewById(R.id.txt_desc);
             textview = (TextView)itemView.findViewById(R.id.txt_row);
-            imageview = (ImageView)itemView.findViewById(R.id.img_row);
+            quantity = (TextView)itemView.findViewById(R.id.txt_quan);
         }
     }
 }
